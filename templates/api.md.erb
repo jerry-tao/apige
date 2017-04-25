@@ -1,0 +1,14 @@
+<%="#" * level%> <%= @title %> [<%= method.to_s.upcase%> <%= path %>]
+
+<%if params.size != 0%>
+Params
+
+<% params.each do |item|%>
+<%= item[:name]%>: <%= item[:required]%>
+<% end%>
+<% end%>
+Response
+
+```
+<%=JSON.pretty_generate(response_value)%>
+```

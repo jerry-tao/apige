@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "apige"
+require 'gli'
+require "pry"
+
+module GliWrapper
+  include GLI::App
+  extend self
+
+  program_desc 'Api generator.'
+  version Apige::VERSION
+
+  subcommand_option_handling :normal
+  arguments :strict
+
+  desc 'Initialize the apige file.'
+  arg_name 'folder'
+  command [:init] do |c|
+    c.action do |global_options, options, args|
+      dir = args[0] ==nil ? '.' : args[0]
+      dir = File.join(dir, 'apige')
+      FileUtils.mkdir_p(dir)
+      root = File.expand_path('../../.',__FILE__)
+      FileUtils.cp_r(File.join(root,'templates'), dir)
+      FileUtils.cp(File.join(root,'examples/config.rb'), dir)
+      FileUtils.cp_r(File.join(root,'examples/apis'), dir)
+    end
+  end
+
+  desc 'Create the md file.'
+  command [:compile] do |c|
+    c.action do |global_options, options, args|
+      if File.exists?('./apige')
+        root_dir = File.join('.', 'apige')
+      elsif File.exists?('./apis')
+        root_dir = '.'
+      else
+        raise "Can't find the apige forlder."
+      end
+      require File.join(root_dir, 'config.rb')
+      Apige.compile!(root_dir)
+    end
+  end
+
+  pre do |global, command, options, args|
+    true
+  end
+
+  on_error do |exception|
+    case exception.class
+    when Errno::EEXIST
+      puts "Folder already exists."
+    else
+      puts exception
+      puts exception.backtrace
+    end
+  end
+
+  exit run(ARGV)
+end
