@@ -3,8 +3,9 @@
 <%if params.size != 0%>
 Params
 
-<% params.each do |item|%>
-<%= item[:name]%>: <%= item[:required]%>
+| Name          | Required       |
+| :-----------: | :------------: |
+<% params.each do |item|%>| <%= item[:name]%> | <%= item[:required]%> |
 <% end%>
 <% end%>
 Response
