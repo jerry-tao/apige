@@ -72,6 +72,7 @@ Structure.
 - meta
 - params
 - required
+- scope reference
 
 ### Template Varable
 
@@ -83,5 +84,6 @@ Structure.
 
 ## WIP
 
-- Mock server
+- Add more dsl for params.
+- Mock server.
 - Support Api blueprint format.

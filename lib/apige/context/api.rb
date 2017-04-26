@@ -1,7 +1,7 @@
 module Apige
   class Context
     class Api
-      attr_accessor :method, :path, :origin_params, :required, :response_value, :title, :desc, :meta
+      attr_accessor :method, :path, :origin_params, :required, :response_value, :title, :desc, :meta, :scope
 
       def params
         Array((origin_params+required).uniq).map do |item|

@@ -52,7 +52,7 @@ module Apige
     end
 
     def default_api(method, path, block)
-      @scope.apis << ApiWrapper.new(method, path, block)
+      @scope.apis << ApiWrapper.new(method, path, block, @scope)
     end
 
 
@@ -82,15 +82,15 @@ module Apige
     end
 
     def put(path, &block)
-      default_api(:get, path, block)
+      default_api(:put, path, block)
     end
 
     def post(path, &block)
-      default_api(:get, path, block)
+      default_api(:post, path, block)
     end
 
     def delete(path, &block)
-      default_api(:get, path, block)
+      default_api(:delete, path, block)
     end
 
   end

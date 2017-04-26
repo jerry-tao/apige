@@ -1,13 +1,14 @@
 module Apige
   class Context
     class ApiWrapper
-      def initialize(method, path, block)
+      def initialize(method, path, block, scope)
         @api = Api.new
         api.method = method
         api.path = path
         api.origin_params = []
         api.required = []
         @block = block
+        api.scope = scope
         api.response_value = instance_exec &block
       end
 
